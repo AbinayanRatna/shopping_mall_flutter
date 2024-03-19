@@ -47,7 +47,7 @@ class _SelectUserPage extends State<SelectUserPage> {
               ),
             ),
             Padding(padding: EdgeInsets.only(top:20.w,bottom: 20.w),
-            child: Text("Admin Login",style: TextStyle(fontSize: 20.w,fontWeight: FontWeight.bold),),),
+            child: Text("Authorized Login",style: TextStyle(fontSize: 20.w,fontWeight: FontWeight.bold),),),
             Padding(
               padding: EdgeInsets.only(left: 40.w, right: 40.w),
               child: Container(
@@ -115,7 +115,7 @@ class _SelectUserPage extends State<SelectUserPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("Forgot password ?",style: TextStyle(fontSize: 15.w)),
-                TextButton(onPressed: (){},child: Text("Contact",style: TextStyle(fontSize: 15.w))),
+                TextButton(onPressed: (){},child: Text("Contact Admin",style: TextStyle(fontSize: 15.w))),
               ],
             )
           ],
