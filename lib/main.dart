@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,60 +12,115 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
+    return ScreenUtilInit(builder: (_, child) {
+      return const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: const SelectUserPage(),
+      );
     });
   }
+}
 
+class SelectUserPage extends StatefulWidget {
+  const SelectUserPage({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _SelectUserPage();
+}
+
+class _SelectUserPage extends State<SelectUserPage> {
+   TextEditingController emailController=TextEditingController();
+   TextEditingController passwordController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
+      backgroundColor: Color.fromRGBO(255, 255, 255, 1.0),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left:30.w,right:30.w,top:50.w),
+              child: Container(
+                height: MediaQuery.of(context).size.height / 3,
+                child: SvgPicture.asset('assets/login.svg',fit: BoxFit.fitWidth),
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            Padding(padding: EdgeInsets.only(top:20.w,bottom: 20.w),
+            child: Text("Admin Login",style: TextStyle(fontSize: 20.w,fontWeight: FontWeight.bold),),),
+            Padding(
+              padding: EdgeInsets.only(left: 40.w, right: 40.w),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Color.fromRGBO(82, 131, 210, 0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(10.w))),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      top: 20.w, bottom: 10.w, right: 10.w, left: 10.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        decoration: const BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                    color: Color.fromRGBO(143, 148, 251, 1)))),
+                        child: TextField(
+                          controller: emailController,
+                          style: TextStyle(fontSize: 15.w),
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Email or Phone number",
+                              hintStyle: TextStyle(color: Colors.grey[700])),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top:10.w),
+                        child: Container(
+                          child: TextField(
+                            style: TextStyle(fontSize: 15.w),
+                            controller: passwordController,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Password",
+                                hintStyle: TextStyle(color: Colors.grey[700])),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
             ),
+            Padding(
+              padding: EdgeInsets.only(left:40.w,right:40.w,top:20.w,bottom: 20.w),
+              child: Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    backgroundColor: Color.fromRGBO(82, 131, 210, 1.0),
+                    fixedSize:Size.fromWidth(MediaQuery.of(context).size.width),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.w)))
+                  ),
+                  child:  Padding(
+                    padding: EdgeInsets.only(top:13.w,bottom: 13.w),
+                    child: Text("Login",style: TextStyle(fontSize: 20.w)),
+                  ),
+                  onPressed: (){},
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Forgot password ?",style: TextStyle(fontSize: 15.w)),
+                TextButton(onPressed: (){},child: Text("Contact",style: TextStyle(fontSize: 15.w))),
+              ],
+            )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
