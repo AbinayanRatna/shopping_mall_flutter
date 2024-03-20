@@ -1,8 +1,24 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopping_mall_flutter/Login.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Platform.isAndroid
+  ? await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: 'AIzaSyCla9Ugj22uFo7PVURViK3S2oBPPQjwbvg',
+      appId: '1:51363061472:android:6317c3785313bf7728ba85',
+      messagingSenderId: '51363061472',
+      projectId: 'shoppingmallappflutter',
+      storageBucket: 'shoppingmallappflutter.appspot.com',
+    ),
+  )
+  : await Firebase.initializeApp(); //need to add firebase for ios
   runApp(const MyApp());
 }
 
