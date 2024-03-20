@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shopping_mall_flutter/Login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,102 +25,139 @@ class SelectUserPage extends StatefulWidget {
   const SelectUserPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => _SelectUserPage();
+  State<StatefulWidget> createState() => _SelectUSerPage();
 }
 
-class _SelectUserPage extends State<SelectUserPage> {
-   TextEditingController emailController=TextEditingController();
-   TextEditingController passwordController=TextEditingController();
+class _SelectUSerPage extends State<SelectUserPage> {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Color.fromRGBO(255, 255, 255, 1.0),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
+      backgroundColor: Colors.white,
+
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [
+                Color.fromRGBO(20, 72, 140, 1.0),
+                Color.fromRGBO(7, 121, 222, 1.0),
+              ],
+              begin: Alignment.bottomCenter,
+              end: Alignment.bottomRight),
+        ),
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.only(left:30.w,right:30.w,top:50.w),
+            Expanded(
+              flex: 3,
               child: Container(
-                height: MediaQuery.of(context).size.height / 3,
-                child: SvgPicture.asset('assets/login.svg',fit: BoxFit.fitWidth),
-              ),
-            ),
-            Padding(padding: EdgeInsets.only(top:20.w,bottom: 20.w),
-            child: Text("Authorized Login",style: TextStyle(fontSize: 20.w,fontWeight: FontWeight.bold),),),
-            Padding(
-              padding: EdgeInsets.only(left: 40.w, right: 40.w),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Color.fromRGBO(82, 131, 210, 0.2),
-                    borderRadius: BorderRadius.all(Radius.circular(10.w))),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      top: 20.w, bottom: 10.w, right: 10.w, left: 10.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        decoration: const BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: Color.fromRGBO(143, 148, 251, 1)))),
-                        child: TextField(
-                          controller: emailController,
-                          style: TextStyle(fontSize: 15.w),
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Email or Phone number",
-                              hintStyle: TextStyle(color: Colors.grey[700])),
+                child: Stack(
+                  children: [
+                    ClipPath(
+                      clipper: DrawClip2(),
+                      child: Container(
+                        width: size.width,
+                        height: size.height * 0.8,
+                        decoration: BoxDecoration(
+                          color: Colors.white
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top:10.w),
-                        child: Container(
-                          child: TextField(
-                            style: TextStyle(fontSize: 15.w),
-                            controller: passwordController,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Password",
-                                hintStyle: TextStyle(color: Colors.grey[700])),
+                    ),
+                    Center(
+                      child: Text(
+                        "Welcome",
+                        style: TextStyle(
+                            fontSize: 35.w,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(51, 110, 201, 1.0),),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: EdgeInsets.only(left: 50.w, right: 50.w),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: 20.w, left: 20.w, right: 20.w, bottom: 20.w),
+                    child: Column(
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            fixedSize:
+                                Size.fromWidth(MediaQuery.of(context).size.width),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15.w),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 15.w, bottom: 15.w),
+                            child: Text("Visit the mall",
+                                style: TextStyle(fontSize: 15.w)),
                           ),
                         ),
-                      )
-                    ],
+                        Padding(
+                          padding: EdgeInsets.only(top: 20.w, bottom: 20.w),
+                          child: Center(
+                            child: Text("--------------- or ---------------", style: TextStyle(fontSize: 15.w,color: Colors.white)),
+                          ),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15.w),
+                            ),
+                          ),
+                            fixedSize:
+                                Size.fromWidth(MediaQuery.of(context).size.width),
+                          ),
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder:(context)=> const AdminLoginPage()));
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 15.w, bottom: 15.w),
+                            child: Text("Admin Login",
+                                style: TextStyle(fontSize: 15.w)),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(left:40.w,right:40.w,top:20.w,bottom: 20.w),
-              child: Center(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: Color.fromRGBO(82, 131, 210, 1.0),
-                    fixedSize:Size.fromWidth(MediaQuery.of(context).size.width),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.w)))
-                  ),
-                  child:  Padding(
-                    padding: EdgeInsets.only(top:13.w,bottom: 13.w),
-                    child: Text("Login",style: TextStyle(fontSize: 20.w)),
-                  ),
-                  onPressed: (){},
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Forgot password ?",style: TextStyle(fontSize: 15.w)),
-                TextButton(onPressed: (){},child: Text("Contact Admin",style: TextStyle(fontSize: 15.w))),
-              ],
-            )
+            Expanded(flex: 1,child: Padding(
+              padding: EdgeInsets.only(bottom: 30.w),
+              child: Align(alignment: Alignment.bottomCenter,child: Text("SS creation",style: TextStyle(fontSize: 13.w,color: Colors.white)),),
+            ))
           ],
         ),
       ),
     );
+  }
+}
+
+class DrawClip2 extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height * 0.80);
+    path.cubicTo(size.width / 4, size.height, 3 * size.width / 4,
+        size.height / 2, size.width, size.height * 0.8);
+    path.lineTo(size.width, 0);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
   }
 }
