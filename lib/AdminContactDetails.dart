@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:uuid/uuid.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AdminAddContacts extends StatefulWidget {
   const AdminAddContacts({super.key});
@@ -84,8 +84,8 @@ class _AdminAddContacts extends State<AdminAddContacts> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text("Add contact details", style: TextStyle(fontSize: 20.sp)),
-        backgroundColor: const Color.fromRGBO(197, 139, 48, 1.0),
-        toolbarHeight: 45.w,
+        backgroundColor: const Color.fromRGBO(51, 110, 203, 1.0),
+        toolbarHeight: 60.w,
       ),
       body: Column(
         children: [
@@ -120,7 +120,7 @@ class _AdminAddContacts extends State<AdminAddContacts> {
                                   hintStyle: TextStyle(
                                       color:
                                       Color.fromRGBO(194, 173, 129, 1.0)),
-                                  hintText: "eg:- M.S.Dhoni"),
+                                  hintText: "eg:- U. Sutharson"),
                               style: (TextStyle(
                                   color: Colors.indigo, fontSize: 15.w)),
                             ),
@@ -176,7 +176,7 @@ class _AdminAddContacts extends State<AdminAddContacts> {
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   backgroundColor:
-                                  const Color.fromRGBO(112, 79, 25, 1.0)),
+                                  const Color.fromRGBO(42, 65, 105, 1.0)),
                               onPressed: () {
                                 setState(() {
                                   uuid = Uuid().v4();
@@ -185,16 +185,20 @@ class _AdminAddContacts extends State<AdminAddContacts> {
                                       .child('Contact_Details')
                                       .child(uuid);
                                 });
-                                Map<String, String> players = {
-                                  'name': contactNameController.text.trim(),
-                                  'contact': contactNumberController.text.toString(),
-                                  'id': uuid,
-                                  'job':contactJobController.text.trim()
-                                };
-                                dbRef2.set(players);
+                                if(contactNumberController.text.length==10){
+                                  Map<String, String> players = {
+                                    'name': contactNameController.text.trim(),
+                                    'contact': contactNumberController.text.toString(),
+                                    'id': uuid,
+                                    'job':contactJobController.text.trim()
+                                  };
+                                  dbRef2.set(players);
+                                }else{
+                                  Fluttertoast.showToast(msg: "Invalid contact Number",toastLength: Toast.LENGTH_SHORT);
+                                }
                               },
                               child: Text(
-                                "Add players",
+                                "Add Details",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 15.w),
                               ),
