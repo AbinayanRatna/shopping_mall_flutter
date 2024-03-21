@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart' as Path;
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shopping_mall_flutter/AdminHome.dart';
 import 'package:uuid/uuid.dart';
 
 class AdminAddPromotions extends StatefulWidget {
@@ -19,8 +20,9 @@ class AdminAddPromotions extends StatefulWidget {
 class _AdminAddPromotions extends State<AdminAddPromotions> {
   late DatabaseReference dbRef2;
   TextEditingController shopNameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   String uuid = Uuid().v4();
-  late String image_url;
+   String image_url='h';
 
   File? image;
 
@@ -57,7 +59,7 @@ class _AdminAddPromotions extends State<AdminAddPromotions> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Add promotions", style: TextStyle(fontSize: 20.sp)),
-        backgroundColor: const Color.fromRGBO(197, 139, 48, 1.0),
+        backgroundColor: const Color.fromRGBO(82, 131, 210, 1.0),
         toolbarHeight: 45.w,
       ),
       body: Column(
@@ -81,10 +83,7 @@ class _AdminAddPromotions extends State<AdminAddPromotions> {
                           children: [
                             SizedBox(
                                 child: (image == null)
-                                    ? SvgPicture.asset(
-                                  "assets/selectUser.svg",
-                                  fit: BoxFit.cover,
-                                )
+                                    ? Image.asset('assets/discount.jpg',fit: BoxFit.cover,)
                                     : Image.file(image!, fit: BoxFit.cover),
                                 height: MediaQuery.of(context).size.height / 5,
                                 width: MediaQuery.of(context).size.width / 3),
@@ -119,8 +118,30 @@ class _AdminAddPromotions extends State<AdminAddPromotions> {
                         controller: shopNameController,
                         decoration: const InputDecoration(
                             hintStyle: TextStyle(
-                                color: Color.fromRGBO(194, 173, 129, 1.0)),
-                            hintText: "eg:- Chennai Super Kings"),
+                                color: Color.fromRGBO(82, 131, 210, 1.0)),
+                            hintText: "eg:- Pizza bay"),
+                        style:
+                        (TextStyle(color: Colors.indigo, fontSize: 15.w)),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 25.w, left: 30.w),
+                      child: Text(
+                        "Description :",
+                        style: TextStyle(color: Colors.black, fontSize: 15.w),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                      EdgeInsets.only(top: 2.w, left: 30.w, right: 30.w),
+                      child: TextField(
+                        maxLength: 80,
+                        controller: descriptionController,
+                        maxLines: 3,
+                        decoration: const InputDecoration(
+                            hintStyle: TextStyle(
+                                color: Color.fromRGBO(82, 131, 210, 1.0)),
+                            hintText: "eg:- Give a brief description about the promotion."),
                         style:
                         (TextStyle(color: Colors.indigo, fontSize: 15.w)),
                       ),
@@ -142,18 +163,16 @@ class _AdminAddPromotions extends State<AdminAddPromotions> {
                   elevation: 0,
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.zero)),
-                  backgroundColor: const Color.fromRGBO(117, 90, 41, 1.0),
+                  backgroundColor: const Color.fromRGBO(82, 131, 210, 1.0),
                 ),
                 onPressed: () {
-                  /*
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const AdminSelectTournamentPage(),
+                        builder: (context) => const AdminHomePage(),
                       ),
                           (route) => false);
 
-                   */
                 },
                 child: Padding(
                   padding: EdgeInsets.only(top: 20.w, bottom: 20.w),
@@ -170,7 +189,7 @@ class _AdminAddPromotions extends State<AdminAddPromotions> {
                 style: ElevatedButton.styleFrom(
                   elevation: 0,
                   // backgroundColor: const Color.fromRGBO(23, 64, 124, 1.0),
-                  backgroundColor: const Color.fromRGBO(107, 75, 3, 1.0),
+                  backgroundColor: const Color.fromRGBO(34, 54, 86, 1.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.zero)),
                 ),
@@ -179,16 +198,19 @@ class _AdminAddPromotions extends State<AdminAddPromotions> {
                     'id': uuid,
                     'name': shopNameController.text.trim(),
                     'image': image_url,
+                    'description':descriptionController.text.trim()
                   };
-                  dbRef2.set(promotions);
-                  /*
+                  dbRef2.set(promotions).then((value) {
+                    Fluttertoast.showToast(msg: "Saved successfully",toastLength: Toast.LENGTH_SHORT);
+
+                  }).onError((error, stackTrace) {
+                    Fluttertoast.showToast(msg: "Error occurred:Try again",toastLength: Toast.LENGTH_SHORT);
+                  });
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AdminSelectTournamentPage()),
+                          builder: (context) => AdminHomePage()),
                           (route) => false);
-
-                   */
                 },
                 child: Padding(
                   padding: EdgeInsets.only(top: 20.w, bottom: 20.w),

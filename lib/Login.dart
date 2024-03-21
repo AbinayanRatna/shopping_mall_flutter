@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:shopping_mall_flutter/AdminAddPromotions.dart';
-import 'package:shopping_mall_flutter/AdminContactDetails.dart';
+import 'package:shopping_mall_flutter/AdminHome.dart';
 
 class AdminLoginPage extends StatefulWidget {
   const AdminLoginPage({super.key});
@@ -92,7 +91,7 @@ class _AdminLoginPage extends State<AdminLoginPage> {
                   ),
                   onPressed: (){
                     //Navigator.push(context, MaterialPageRoute(builder: (context)=>const AdminAddContacts()));
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const AdminAddPromotions()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> const AdminHomePage()));
                   },
                 ),
               ),
