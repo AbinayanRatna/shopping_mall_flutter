@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shopping_mall_flutter/UserChatPage.dart';
 import 'package:shopping_mall_flutter/UserContactPage.dart';
 import 'package:shopping_mall_flutter/UserShopPage.dart';
 import 'package:shopping_mall_flutter/main.dart';
@@ -306,7 +307,7 @@ class _UserHomePage extends State<UserHomePage> {
                           ),
                           InkWell(
                             onTap: () {
-
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>UserChatPage()));
                             },
                             child: Container(
                                 decoration: BoxDecoration(
