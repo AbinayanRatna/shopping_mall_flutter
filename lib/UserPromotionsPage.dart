@@ -54,20 +54,6 @@ class _UserPromotionPage extends State<UserPromotionPage> {
                   fontSize: 15.w
               ),),
             ),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    elevation: (0),
-                    padding: (EdgeInsets.only(top: 10.w, bottom: 10.w)),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
-                    backgroundColor: Color.fromRGBO(16, 36, 85, 1.0)),
-                onPressed: () {},
-                child: Padding(
-                  padding: EdgeInsets.only(top:15.w,bottom: 15.w),
-                  child: Text(
-                    "Find shop",
-                    style: TextStyle(fontSize: 15.w, color: Colors.white),
-                  ),
-                )),
           ],
         )
       ),
@@ -84,71 +70,31 @@ class _UserPromotionPage extends State<UserPromotionPage> {
         backgroundColor: const Color.fromRGBO(51, 110, 203, 1.0),
         toolbarHeight: 60.w,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Padding(
-              padding: EdgeInsets.only(
-                  left: 20.w, top: 20.w, right: 20.w, bottom: 20.w),
-              child: Container(
-                decoration:
-                BoxDecoration(border: Border.all(color: Colors.black87)),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Padding(
-                        padding:  EdgeInsets.only(left:10.w),
-                        child: TextField(
-                            style: TextStyle(fontSize: 15.w,color: Colors.black87),
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Search",
-                                hintStyle: TextStyle(color: Colors.grey[700]))),
-                      ),),
-                    Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding:  EdgeInsets.only(left:10.w),
-                        child: IconButton(
-                          onPressed: (){},
-                          icon: Icon(Icons.search,color: Colors.black87,size: 25.h,),
-                        ),
-                      ),),
-                  ],
+      body: Container(
+        child: Padding(
+          padding: EdgeInsets.only(bottom: 25.w,top:10.w),
+          child: FirebaseAnimatedList(
+            query: dbQuery,
+            defaultChild: Align(
+              alignment: Alignment.topCenter,
+              child: SizedBox(
+                height: 35.w,
+                width: 35.w,
+                child: const CircularProgressIndicator(
+                  backgroundColor: Color.fromRGBO(25, 56, 133, 1.0),
+                  valueColor: AlwaysStoppedAnimation(Colors.lightBlue),
+                  strokeWidth: 10,
                 ),
               ),
             ),
+            itemBuilder: (BuildContext context, DataSnapshot snapshot,
+                Animation<double> animation, int index) {
+              Map promotions = snapshot.value as Map;
+              promotions['key'] = snapshot.key;
+              return listItem(thisPromotion: promotions);
+            },
           ),
-          Expanded(
-            flex: 7,
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 25.w),
-              child: FirebaseAnimatedList(
-                query: dbQuery,
-                defaultChild: Align(
-                  alignment: Alignment.topCenter,
-                  child: SizedBox(
-                    height: 35.w,
-                    width: 35.w,
-                    child: const CircularProgressIndicator(
-                      backgroundColor: Color.fromRGBO(25, 56, 133, 1.0),
-                      valueColor: AlwaysStoppedAnimation(Colors.lightBlue),
-                      strokeWidth: 10,
-                    ),
-                  ),
-                ),
-                itemBuilder: (BuildContext context, DataSnapshot snapshot,
-                    Animation<double> animation, int index) {
-                  Map promotions = snapshot.value as Map;
-                  promotions['key'] = snapshot.key;
-                  return listItem(thisPromotion: promotions);
-                },
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

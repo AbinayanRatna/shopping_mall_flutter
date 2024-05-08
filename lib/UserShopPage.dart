@@ -2,7 +2,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shopping_mall_flutter/UserHomePage.dart';
 import 'package:shopping_mall_flutter/UserQRScanningPage.dart';
 
 class UserShopPage extends StatefulWidget {
@@ -15,6 +14,7 @@ class UserShopPage extends StatefulWidget {
 class _UserShopPage extends State<UserShopPage> {
   late DatabaseReference dbRef2;
   late Query dbQuery;
+  TextEditingController searchTextController=TextEditingController();
 
   @override
   void initState() {
@@ -34,7 +34,8 @@ class _UserShopPage extends State<UserShopPage> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     elevation: (0),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.zero)),
                     padding: (EdgeInsets.only(top: 10.w, bottom: 10.w)),
                     backgroundColor: Color.fromRGBO(201, 169, 101, 1.0)),
                 onPressed: () {},
@@ -45,7 +46,10 @@ class _UserShopPage extends State<UserShopPage> {
                         padding: EdgeInsets.only(top: 5.w, bottom: 5.w),
                         child: Text(
                           thisPlayer['name'],
-                          style: TextStyle(fontSize: 25.w, color: Colors.black,fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 25.w,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       Padding(
@@ -54,11 +58,11 @@ class _UserShopPage extends State<UserShopPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             thisPlayer['description'],
-                            style: TextStyle(fontSize: 15.w, color: Colors.black),
+                            style:
+                                TextStyle(fontSize: 15.w, color: Colors.black),
                           ),
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -69,11 +73,21 @@ class _UserShopPage extends State<UserShopPage> {
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       elevation: (0),
-                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.zero)),
                       padding: (EdgeInsets.only(top: 10.w, bottom: 10.w)),
                       backgroundColor: Color.fromRGBO(229, 227, 221, 1.0)),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> QrScannerPage(DesctinationShop: thisPlayer['name'].toString(),)));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => QrScannerPage(
+                                  DesctinationShop:
+                                      thisPlayer['name'].toString(),
+                              DesctinationFloor: thisPlayer['floor_number'].toString(),
+                              DesctinationShopFromLeft: thisPlayer['from_left'].toString(),
+                              DesctinationShopFromRIght: thisPlayer['from_right'].toString(),
+                                )));
                   },
                   child: Text(
                     "Locate",
@@ -91,8 +105,9 @@ class _UserShopPage extends State<UserShopPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        iconTheme: IconThemeData( color: Colors.white),
-        title: Text("Find Shops", style: TextStyle(fontSize: 20.sp,color: Colors.white)),
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Text("Find Shops",
+            style: TextStyle(fontSize: 20.sp, color: Colors.white)),
         backgroundColor: const Color.fromRGBO(51, 110, 203, 1.0),
         toolbarHeight: 60.w,
       ),
@@ -113,6 +128,10 @@ class _UserShopPage extends State<UserShopPage> {
                       child: Padding(
                         padding: EdgeInsets.only(left: 10.w),
                         child: TextField(
+                          controller: searchTextController,
+                            onChanged: (String value) {
+                              setState(() {});
+                            },
                             style: TextStyle(
                                 fontSize: 15.w, color: Colors.black87),
                             decoration: InputDecoration(
@@ -158,11 +177,32 @@ class _UserShopPage extends State<UserShopPage> {
                     ),
                   ),
                 ),
+                /*
                 itemBuilder: (BuildContext context, DataSnapshot snapshot,
                     Animation<double> animation, int index) {
                   Map promotions = snapshot.value as Map;
                   promotions['key'] = snapshot.key;
                   return listItem(thisPlayer: promotions);
+                },
+                 */
+                itemBuilder: (BuildContext context, DataSnapshot snapshot,
+                    Animation<double> animation, int index) {
+
+                  final title = snapshot.child('name').value.toString();
+                  if (searchTextController.text.isEmpty) {
+                    Map promotions = snapshot.value as Map;
+                    promotions['key'] = snapshot.key;
+                    return listItem(thisPlayer: promotions);
+                  }
+                  //else if
+                  else if (title.toLowerCase().contains(searchTextController.text.toLowerCase().toString())) {
+                    Map promotions = snapshot.value as Map;
+                    promotions['key'] = snapshot.key;
+                    return listItem(thisPlayer: promotions);
+                  }
+                  else {
+                    return Container();
+                  }
                 },
               ),
             ),
