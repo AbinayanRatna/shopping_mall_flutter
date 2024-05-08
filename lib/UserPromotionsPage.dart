@@ -23,7 +23,7 @@ class _UserPromotionPage extends State<UserPromotionPage> {
     return Padding(
       padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.w),
       child: Container(
-        decoration: BoxDecoration(color: Color.fromRGBO(229, 227, 221, 1.0)),
+        decoration: const BoxDecoration(color: Color.fromRGBO(229, 227, 221, 1.0)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -65,7 +65,7 @@ class _UserPromotionPage extends State<UserPromotionPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         title: Text("Promotions", style: TextStyle(fontSize: 20.sp,color: Colors.white)),
         backgroundColor: const Color.fromRGBO(51, 110, 203, 1.0),
         toolbarHeight: 60.w,

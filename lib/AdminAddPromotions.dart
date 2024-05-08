@@ -24,7 +24,7 @@ class _AdminAddPromotions extends State<AdminAddPromotions> {
   late DatabaseReference dbRef2;
   TextEditingController shopNameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  String uuid = Uuid().v4();
+  String uuid = const Uuid().v4();
   String image_url = 'h';
 
   File? image;
@@ -41,7 +41,7 @@ class _AdminAddPromotions extends State<AdminAddPromotions> {
     var imageFile = File(image!.path);
     String fileName = Path.basename(imageFile.path);
 
-    FirebaseStorage storage  = FirebaseStorage.instance;
+    FirebaseStorage storage = FirebaseStorage.instance;
 
     Reference ref = storage.ref().child("Promotion_$fileName");
     UploadTask uploadTask = ref.putFile(imageFile);
@@ -231,7 +231,7 @@ class _AdminAddPromotions extends State<AdminAddPromotions> {
                   elevation: 0,
                   // backgroundColor: const Color.fromRGBO(23, 64, 124, 1.0),
                   backgroundColor: const Color.fromRGBO(34, 54, 86, 1.0),
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.zero)),
                 ),
                 onPressed: () {
@@ -265,7 +265,7 @@ class _AdminAddPromotions extends State<AdminAddPromotions> {
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AdminHomePage()),
+                            builder: (context) => const AdminHomePage()),
                         (route) => false);
                   }
                 },
