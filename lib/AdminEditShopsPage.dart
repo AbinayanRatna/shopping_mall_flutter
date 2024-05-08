@@ -8,27 +8,35 @@ import 'package:shopping_mall_flutter/AdminShowQrPage.dart';
 import 'AdminHome.dart';
 import 'AdminShopsSelectPage.dart';
 
-class AdminAddShopsPage extends StatefulWidget {
-  const AdminAddShopsPage({super.key});
+class AdminEditShopsPage extends StatefulWidget {
+  final String shopname;
+  final String floorNum;
+  final String numberLeft;
+  final String numberRight;
+  final String description;
+  final String qr;
+  const AdminEditShopsPage({super.key, required this.shopname, required this.floorNum, required this.numberLeft, required this.numberRight, required this.qr, required this.description});
 
   @override
-  State<StatefulWidget> createState() => _AdminAddShopsPage();
+  State<StatefulWidget> createState() => _AdminEditShopsPage();
 }
 
-class _AdminAddShopsPage extends State<AdminAddShopsPage> {
+class _AdminEditShopsPage extends State<AdminEditShopsPage> {
   late DatabaseReference dbRef1;
   TextEditingController shopNameController = TextEditingController();
   TextEditingController shopDescriptionController = TextEditingController();
   TextEditingController shopFloorNumberController = TextEditingController();
   TextEditingController shopNumberFromRightController = TextEditingController();
   TextEditingController shopNumberFromLeftController = TextEditingController();
-  String image_url = 'h';
 
-  File? image;
 
   @override
   void initState() {
     super.initState();
+    shopDescriptionController = TextEditingController(text: widget.description);
+     shopFloorNumberController = TextEditingController(text: widget.floorNum);
+     shopNumberFromRightController = TextEditingController(text: widget.numberRight);
+     shopNumberFromLeftController = TextEditingController(text: widget.numberLeft);
     dbRef1 = FirebaseDatabase.instance.ref().child('shops');
   }
 
@@ -37,27 +45,9 @@ class _AdminAddShopsPage extends State<AdminAddShopsPage> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
-        title: Text("Add shops",
+        title: Text(widget.shopname,
             style: TextStyle(fontSize: 20.sp, color: Colors.white)),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 20.w),
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                         const AdminShopsSelectPage()));
-              },
-              child: Icon(
-                Icons.edit_note_rounded,
-                size: 30.w,
-                color: Colors.white,
-              ),
-            ),
-          )
-        ],
+        automaticallyImplyLeading: true,
         backgroundColor: const Color.fromRGBO(82, 131, 210, 1.0),
         toolbarHeight: 55.w,
       ),
@@ -79,29 +69,6 @@ class _AdminAddShopsPage extends State<AdminAddShopsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 30.w),
-                      child: Text(
-                        "Shop name:",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 15.w,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsets.only(top: 2.w, left: 30.w, right: 30.w),
-                      child: TextField(
-                        controller: shopNameController,
-                        decoration: const InputDecoration(
-                            hintStyle: TextStyle(
-                                color: Color.fromRGBO(157, 173, 203, 1.0)),
-                            hintText: "eg:- Pizza bay"),
-                        style:
-                            (TextStyle(color: Colors.indigo, fontSize: 15.w)),
-                      ),
-                    ),
-                    Padding(
                       padding: EdgeInsets.only(top: 25.w, left: 30.w),
                       child: Text(
                         "Floor number:",
@@ -113,7 +80,7 @@ class _AdminAddShopsPage extends State<AdminAddShopsPage> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsets.only(top: 2.w, left: 30.w, right: 30.w),
+                      EdgeInsets.only(top: 2.w, left: 30.w, right: 30.w),
                       child: TextField(
                         controller: shopFloorNumberController,
                         keyboardType: TextInputType.number,
@@ -122,7 +89,7 @@ class _AdminAddShopsPage extends State<AdminAddShopsPage> {
                                 color: Color.fromRGBO(157, 173, 203, 1.0)),
                             hintText: "eg:- In which floor the shop is found"),
                         style:
-                            (TextStyle(color: Colors.indigo, fontSize: 15.w)),
+                        (TextStyle(color: Colors.indigo, fontSize: 15.w)),
                       ),
                     ),
                     Padding(
@@ -137,7 +104,7 @@ class _AdminAddShopsPage extends State<AdminAddShopsPage> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsets.only(top: 2.w, left: 30.w, right: 30.w),
+                      EdgeInsets.only(top: 2.w, left: 30.w, right: 30.w),
                       child: TextField(
                         controller: shopNumberFromRightController,
                         keyboardType: TextInputType.number,
@@ -146,7 +113,7 @@ class _AdminAddShopsPage extends State<AdminAddShopsPage> {
                                 color: Color.fromRGBO(157, 173, 203, 1.0)),
                             hintText: "eg:- Mention the number from elevator"),
                         style:
-                            (TextStyle(color: Colors.indigo, fontSize: 15.w)),
+                        (TextStyle(color: Colors.indigo, fontSize: 15.w)),
                       ),
                     ),
                     Padding(
@@ -161,7 +128,7 @@ class _AdminAddShopsPage extends State<AdminAddShopsPage> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsets.only(top: 2.w, left: 30.w, right: 30.w),
+                      EdgeInsets.only(top: 2.w, left: 30.w, right: 30.w),
                       child: TextField(
                         controller: shopNumberFromLeftController,
                         keyboardType: TextInputType.number,
@@ -170,7 +137,7 @@ class _AdminAddShopsPage extends State<AdminAddShopsPage> {
                                 color: Color.fromRGBO(157, 173, 203, 1.0)),
                             hintText: "eg:- Mention the number from elevator"),
                         style:
-                            (TextStyle(color: Colors.indigo, fontSize: 15.w)),
+                        (TextStyle(color: Colors.indigo, fontSize: 15.w)),
                       ),
                     ),
                     Padding(
@@ -185,7 +152,7 @@ class _AdminAddShopsPage extends State<AdminAddShopsPage> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsets.only(top: 2.w, left: 30.w, right: 30.w),
+                      EdgeInsets.only(top: 2.w, left: 30.w, right: 30.w),
                       child: TextField(
                         maxLength: 80,
                         controller: shopDescriptionController,
@@ -194,9 +161,9 @@ class _AdminAddShopsPage extends State<AdminAddShopsPage> {
                             hintStyle: TextStyle(
                                 color: Color.fromRGBO(157, 173, 203, 1.0)),
                             hintText:
-                                "eg:- Give a brief description about the shop."),
+                            "eg:- Give a brief description about the shop."),
                         style:
-                            (TextStyle(color: Colors.indigo, fontSize: 15.w)),
+                        (TextStyle(color: Colors.indigo, fontSize: 15.w)),
                       ),
                     ),
                   ],
@@ -224,7 +191,7 @@ class _AdminAddShopsPage extends State<AdminAddShopsPage> {
                       MaterialPageRoute(
                         builder: (context) => const AdminHomePage(),
                       ),
-                      (route) => false);
+                          (route) => false);
                 },
                 child: Padding(
                   padding: EdgeInsets.only(top: 20.w, bottom: 20.w),
@@ -246,47 +213,25 @@ class _AdminAddShopsPage extends State<AdminAddShopsPage> {
                       borderRadius: BorderRadius.all(Radius.zero)),
                 ),
                 onPressed: () {
-                  /*
-                  if(shopNameController.text.trim() == ""){
-
-                  }else if(shopFloorNumberController.text.trim()==""){
-
-                  }else if(shopNumberFromRightController.text.trim()==""){
-
-                  }else if(shopNumberFromLeftController.text.trim()==""){
-
-                  }else if(shopDescriptionController.text.trim()==""){
-
-                  }else{
-
-                    Map<String,String> addShop={
-                      "shop_name":shopNameController.text.trim(),
-                      "description":shopDescriptionController.text.trim(),
-                      "floor_number":shopFloorNumberController.text.trim(),
-                      "number_from_right":shopNumberFromRightController.text.trim(),
-                      "number_from_left":shopNumberFromLeftController.text.trim(),
-                      "qr":""
-                    };
-                  }
-
-                   */
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AdminShowQrPage(
-                          shopName: shopNameController.text.trim(),
-                        description: shopDescriptionController.text.trim(),
-                        floorNumber: shopFloorNumberController.text.trim(),
-                        shopsFromLeft: shopNumberFromLeftController.text.trim(),
-                        shopsFromRight: shopNumberFromRightController.text.trim(),
-                      ),
-                    ),
-                  );
+                  Map<String,String> shops={
+                    "name":(widget.shopname).toString(),
+                    "floor_number":(shopFloorNumberController.text.trim()).toString(),
+                    "from_right":(shopNumberFromRightController.text.trim()).toString(),
+                    "from_left":(shopNumberFromLeftController.text.trim()).toString(),
+                    "description":(shopDescriptionController.text.trim()).toString(),
+                    "qr":widget.qr
+                  };
+                  dbRef1.child(widget.shopname).update(shops);
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AdminHomePage()),
+                          (route) => false);
                 },
                 child: Padding(
                   padding: EdgeInsets.only(top: 20.w, bottom: 20.w),
                   child: Text(
-                    "Add Shop",
+                    "Edit Shop",
                     style: TextStyle(color: Colors.white, fontSize: 15.w),
                   ),
                 ),

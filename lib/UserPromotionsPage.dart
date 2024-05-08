@@ -58,6 +58,7 @@ class _UserPromotionPage extends State<UserPromotionPage> {
                 style: ElevatedButton.styleFrom(
                     elevation: (0),
                     padding: (EdgeInsets.only(top: 10.w, bottom: 10.w)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
                     backgroundColor: Color.fromRGBO(16, 36, 85, 1.0)),
                 onPressed: () {},
                 child: Padding(
@@ -78,9 +79,8 @@ class _UserPromotionPage extends State<UserPromotionPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-
-        title: Text("Promotions", style: TextStyle(fontSize: 20.sp)),
-
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Text("Promotions", style: TextStyle(fontSize: 20.sp,color: Colors.white)),
         backgroundColor: const Color.fromRGBO(51, 110, 203, 1.0),
         toolbarHeight: 60.w,
       ),

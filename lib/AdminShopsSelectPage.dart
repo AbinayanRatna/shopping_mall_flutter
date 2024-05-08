@@ -2,18 +2,17 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shopping_mall_flutter/UserHomePage.dart';
-import 'package:shopping_mall_flutter/UserQRScanningPage.dart';
+import 'package:shopping_mall_flutter/AdminEditShopsPage.dart';
 
-class UserShopPage extends StatefulWidget {
-  const UserShopPage({super.key});
+class AdminShopsSelectPage extends StatefulWidget {
+  const AdminShopsSelectPage({super.key});
 
   @override
-  State<UserShopPage> createState() => _UserShopPage();
+  State<AdminShopsSelectPage> createState() => _AdminShopsSelectPage();
 }
 
-class _UserShopPage extends State<UserShopPage> {
-  late DatabaseReference dbRef2;
+class _AdminShopsSelectPage extends State<AdminShopsSelectPage> {
+   DatabaseReference dbRef2=FirebaseDatabase.instance.ref().child('shops');
   late Query dbQuery;
 
   @override
@@ -26,7 +25,8 @@ class _UserShopPage extends State<UserShopPage> {
     return Padding(
       padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.w),
       child: Container(
-        decoration: BoxDecoration(color: Color.fromRGBO(229, 227, 221, 1.0)),
+        decoration:
+            const BoxDecoration(color: Color.fromRGBO(229, 227, 221, 1.0)),
         child: Row(
           children: [
             Expanded(
@@ -34,9 +34,10 @@ class _UserShopPage extends State<UserShopPage> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     elevation: (0),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.zero)),
                     padding: (EdgeInsets.only(top: 10.w, bottom: 10.w)),
-                    backgroundColor: Color.fromRGBO(201, 169, 101, 1.0)),
+                    backgroundColor: const Color.fromRGBO(201, 169, 101, 1.0)),
                 onPressed: () {},
                 child: Container(
                   child: Column(
@@ -45,7 +46,10 @@ class _UserShopPage extends State<UserShopPage> {
                         padding: EdgeInsets.only(top: 5.w, bottom: 5.w),
                         child: Text(
                           thisPlayer['name'],
-                          style: TextStyle(fontSize: 25.w, color: Colors.black,fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 25.w,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       Padding(
@@ -54,11 +58,11 @@ class _UserShopPage extends State<UserShopPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             thisPlayer['description'],
-                            style: TextStyle(fontSize: 15.w, color: Colors.black),
+                            style:
+                                TextStyle(fontSize: 15.w, color: Colors.black),
                           ),
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -66,19 +70,55 @@ class _UserShopPage extends State<UserShopPage> {
             ),
             Expanded(
               flex: 1,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        elevation: (0),
+                        padding: (EdgeInsets.only(top:20.w,bottom: 20.w)),
+                        backgroundColor:
+                            const Color.fromRGBO(229, 227, 221, 1.0),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.zero))),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AdminEditShopsPage(
+                            description: thisPlayer['description'],
+                            floorNum: thisPlayer["floor_number"],
+                            numberLeft: thisPlayer["from_left"],
+                            numberRight: thisPlayer["from_right"],
+                            qr: thisPlayer["qr"],
+                            shopname: thisPlayer["name"],
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      "Edit",
+                      style: TextStyle(fontSize: 15.w, color: Colors.black),
+                    ),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
                       elevation: (0),
-                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
-                      padding: (EdgeInsets.only(top: 10.w, bottom: 10.w)),
-                      backgroundColor: Color.fromRGBO(229, 227, 221, 1.0)),
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> QrScannerPage(DesctinationShop: thisPlayer['name'].toString(),)));
-                  },
-                  child: Text(
-                    "Locate",
-                    style: TextStyle(fontSize: 15.w, color: Colors.black),
-                  )),
+                      padding: (EdgeInsets.only(top:20.w,bottom: 20.w)),
+                      backgroundColor: const Color.fromRGBO(229, 227, 221, 1.0),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.zero),
+                      ),
+                    ),
+                    onPressed: () {
+                      dbRef2.child(thisPlayer['name']).remove();
+                    },
+                    child: Text(
+                      "Remove",
+                      style: TextStyle(fontSize: 15.w, color: Colors.black),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -91,8 +131,9 @@ class _UserShopPage extends State<UserShopPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        iconTheme: IconThemeData( color: Colors.white),
-        title: Text("Find Shops", style: TextStyle(fontSize: 20.sp,color: Colors.white)),
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: Text("Select Shops",
+            style: TextStyle(fontSize: 20.sp, color: Colors.white)),
         backgroundColor: const Color.fromRGBO(51, 110, 203, 1.0),
         toolbarHeight: 60.w,
       ),
@@ -103,45 +144,11 @@ class _UserShopPage extends State<UserShopPage> {
             child: Padding(
               padding: EdgeInsets.only(
                   left: 20.w, top: 20.w, right: 20.w, bottom: 20.w),
-              child: Container(
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.black87)),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 10.w),
-                        child: TextField(
-                            style: TextStyle(
-                                fontSize: 15.w, color: Colors.black87),
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Search",
-                                hintStyle: TextStyle(color: Colors.grey[700]))),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 10.w),
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.search,
-                            color: Colors.black87,
-                            size: 25.h,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              child: Container(),
             ),
           ),
           Expanded(
-            flex: 7,
+            flex: 15,
             child: Padding(
               padding: EdgeInsets.only(bottom: 25.w),
               child: FirebaseAnimatedList(

@@ -84,6 +84,7 @@ class _UserChatPage extends State<UserChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color:Colors.white),
         toolbarHeight: 65.w,
         backgroundColor: Colors.blue.shade400,
         title: const  Text(

@@ -30,6 +30,7 @@ class _UserShopPage extends State<UserContactPage> {
               flex: 2,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
                       elevation: (0),
                       padding: (EdgeInsets.only(top: 10.w, bottom: 10.w)),
                       backgroundColor: Color.fromRGBO(201, 169, 101, 1.0)),
@@ -64,6 +65,7 @@ class _UserShopPage extends State<UserContactPage> {
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       elevation: (0),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
                       padding: (EdgeInsets.only(top: 10.w, bottom: 10.w)),
                       backgroundColor: Color.fromRGBO(229, 227, 221, 1.0)),
                   onPressed: () {},
@@ -83,48 +85,15 @@ class _UserShopPage extends State<UserContactPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text("Contact Us", style: TextStyle(fontSize: 20.sp)),
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Text("Contact Us", style: TextStyle(fontSize: 20.sp,color: Colors.white)),
         backgroundColor: const Color.fromRGBO(51, 110, 203, 1.0),
         toolbarHeight: 60.w,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Padding(
-              padding: EdgeInsets.only(
-                  left: 20.w, top: 20.w, right: 20.w, bottom: 20.w),
-              child: Container(
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.black87)),
-                child: Row(
-                  children: [
-                    Expanded(
-                        flex: 3,
-                        child: Padding(
-                          padding:  EdgeInsets.only(left:10.w),
-                          child: TextField(
-                            style: TextStyle(fontSize: 15.w,color: Colors.black87),
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Search",
-                                  hintStyle: TextStyle(color: Colors.grey[700]))),
-                        ),),
-                    Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding:  EdgeInsets.only(left:10.w),
-                        child: IconButton(
-                          onPressed: (){},
-                          icon: Icon(Icons.search,color: Colors.black87,size: 25.h,),
-                        ),
-                      ),),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Expanded(
+      body: Container(
+        child: Padding(
+          padding:  EdgeInsets.only(top:10.w),
+          child: Expanded(
             flex: 7,
             child: Padding(
               padding: EdgeInsets.only(bottom: 25.w),
@@ -151,7 +120,7 @@ class _UserShopPage extends State<UserContactPage> {
               ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }

@@ -9,9 +9,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
 import 'package:shopping_mall_flutter/AdminHome.dart';
-import 'package:uuid/uuid.dart';
-
-import 'AdminSelectPromotionsPage.dart';
 
 class AdminEditPromotionsPage extends StatefulWidget {
   final String shopName;
@@ -63,10 +60,14 @@ class _AdminEditPromotionsPage extends State<AdminEditPromotionsPage> {
   @override
   void initState() {
     super.initState();
-    image_url=widget.shopPromoImage;
-    shopNameController=TextEditingController(text: widget.shopName);
-    descriptionController=TextEditingController(text: widget.shopPromoDescription);
-    dbRef2 = FirebaseDatabase.instance.ref().child('promotions').child(widget.shopPromoId);
+    image_url = widget.shopPromoImage;
+    shopNameController = TextEditingController(text: widget.shopName);
+    descriptionController =
+        TextEditingController(text: widget.shopPromoDescription);
+    dbRef2 = FirebaseDatabase.instance
+        .ref()
+        .child('promotions')
+        .child(widget.shopPromoId);
   }
 
   @override
@@ -74,9 +75,10 @@ class _AdminEditPromotionsPage extends State<AdminEditPromotionsPage> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
-        title: Text("Edit promotions",
-            style: TextStyle(fontSize: 20.sp, color: Colors.white)),
-
+        title: Text(
+          "Edit promotions",
+          style: TextStyle(fontSize: 20.sp, color: Colors.white),
+        ),
         backgroundColor: const Color.fromRGBO(82, 131, 210, 1.0),
         toolbarHeight: 55.w,
       ),
@@ -103,7 +105,8 @@ class _AdminEditPromotionsPage extends State<AdminEditPromotionsPage> {
                                 height: MediaQuery.of(context).size.height / 5,
                                 width: MediaQuery.of(context).size.width / 3,
                                 child: (image == null)
-                                    ? Image.network(widget.shopPromoImage,
+                                    ? Image.network(
+                                        widget.shopPromoImage,
                                         fit: BoxFit.cover,
                                       )
                                     : Image.file(image!, fit: BoxFit.cover)),
@@ -248,9 +251,7 @@ class _AdminEditPromotionsPage extends State<AdminEditPromotionsPage> {
                       Fluttertoast.showToast(
                           msg: "Updated successfully",
                           toastLength: Toast.LENGTH_SHORT);
-
-                    }).onError((error, stackTrace)  {
-
+                    }).onError((error, stackTrace) {
                       Fluttertoast.showToast(
                           msg: "Error occurred:Try again",
                           toastLength: Toast.LENGTH_SHORT);
