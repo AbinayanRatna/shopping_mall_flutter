@@ -88,7 +88,7 @@ class _AdminLoginPage extends State<AdminLoginPage> {
                   ),
                   child:  Padding(
                     padding: EdgeInsets.only(top:13.w,bottom: 13.w),
-                    child:  Text("Login",style: TextStyle(fontSize: 20.w)),
+                    child:  Text("Login",style: TextStyle(fontSize: 20.w,color: Colors.white)),
                   ),
                   onPressed: (){
                     if(emailController.text.trim()=='admin@gmail.com' && passwordController.text.trim()=='password'){

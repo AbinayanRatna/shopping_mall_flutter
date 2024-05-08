@@ -49,6 +49,9 @@ dependencies:
     git:
       url: 'https://github.com/AbinayanRatna/dialogflow_grpc_flutter.git'
       ref: 'main'
+  qr_mobile_vision: ^5.0.1
+  qr_code_scanner: ^1.0.1
+  qr_flutter: ^4.1.0
 
 
 dev_dependencies:

@@ -132,7 +132,7 @@ class _UserPromotionPage extends State<UserPromotionPage> {
                   child: SizedBox(
                     height: 35.w,
                     width: 35.w,
-                    child: CircularProgressIndicator(
+                    child: const CircularProgressIndicator(
                       backgroundColor: Color.fromRGBO(25, 56, 133, 1.0),
                       valueColor: AlwaysStoppedAnimation(Colors.lightBlue),
                       strokeWidth: 10,
